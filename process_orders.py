@@ -9,9 +9,9 @@ def process_orders(file_name):
     items = {}
 
     for order in orders:
-        # Update customers dictionary
+        # Use the 'name' field directly from the order
         phone = order['phone']
-        name = order.get('customer', 'Unknown')
+        name = order['name']  # Directly use the 'name' field from each order
 
         customers[phone] = name
 
@@ -21,8 +21,9 @@ def process_orders(file_name):
             item_price = item['price']
             if item_name in items:
                 items[item_name]['orders'] += 1
+                items[item_name]['total_sales'] += item_price
             else:
-                items[item_name] = {'price': item_price, 'orders': 1}
+                items[item_name] = {'price': item_price, 'orders': 1, 'total_sales': item_price}
 
     return customers, items
 
